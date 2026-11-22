@@ -1,0 +1,38 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3 effective-5.10 (swiftlang-6.3.0.123.5 clang-2100.0.123.102)
+// swift-module-flags: -target arm64-apple-ios15.1 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-concise-pound-file -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name CustomerVoiceUI
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3
+import AVFAudio
+import Combine
+@_exported import CustomerVoice
+import Foundation
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public enum CustomerVoiceTheme {
+  public static let accent: SwiftUICore.Color
+  public static let ink: SwiftUICore.Color
+  public static let secondary: SwiftUICore.Color
+  public static let background: SwiftUICore.LinearGradient
+}
+@_Concurrency.MainActor public struct CustomerVoiceCallView : SwiftUICore.View {
+  @_Concurrency.MainActor public init(callID: Swift.String, voice: CustomerVoice = .shared, onEnded: @escaping () -> Swift.Void = {})
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s15CustomerVoiceUI0aB8CallViewV4bodyQrvp", 0) __
+}
+@_Concurrency.MainActor public enum CustomerVoiceUI {
+  @_Concurrency.MainActor public static func install(on host: UIKit.UIViewController, voice: CustomerVoice = .shared) -> CustomerVoicePresenter
+  @_Concurrency.MainActor public static func controller(callID: Swift.String, voice: CustomerVoice = .shared, onEnded: @escaping () -> Swift.Void = {}) -> UIKit.UIViewController
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class CustomerVoicePresenter {
+  @_Concurrency.MainActor final public func showCall(callID: Swift.String)
+  @objc deinit
+}
+extension CustomerVoiceCallView : Swift.Sendable {}
+extension CustomerVoiceUI : Swift.Sendable {}
+extension CustomerVoicePresenter : Swift.Sendable {}

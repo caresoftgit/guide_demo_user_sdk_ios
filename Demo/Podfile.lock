@@ -1,0 +1,16 @@
+PODS:
+  - CaresoftCustomerVoice (0.5.0)
+
+DEPENDENCIES:
+  - CaresoftCustomerVoice (from `../SDK`)
+
+EXTERNAL SOURCES:
+  CaresoftCustomerVoice:
+    :path: "../SDK"
+
+SPEC CHECKSUMS:
+  CaresoftCustomerVoice: 61f564592b351cabf01ca6671a1461b72a02906b
+
+PODFILE CHECKSUM: 29cf2ad25e4147374294efbb6220c0951afac29d
+
+COCOAPODS: 1.16.2

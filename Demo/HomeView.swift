@@ -7,8 +7,13 @@ struct PresentedCall: Identifiable { let id: String }
 @MainActor struct HomeView: View {
     @ObservedObject private var voice: CustomerVoice
     let configurationError: String?
-    init(configurationError: String?, voice: CustomerVoice = .shared) {
+    @State private var enterprise: EnterpriseSession
+    init(configurationError: String?, voice: CustomerVoice = .shared, enterpriseSession: EnterpriseSession? = nil) {
         self.configurationError = configurationError; _voice = ObservedObject(wrappedValue:voice)
+        _enterprise = State(initialValue: enterpriseSession ?? EnterpriseSession(baseURL: (try? DemoConfig.enterpriseURL()) ?? URL(string:"https://enterprise.example.invalid")!, prepare: {
+            let p = try voice.prepareLogin()
+            return ["attempt_id":p.attemptID,"installation_id":p.installationID,"os":p.platform,"application_id":p.applicationID,"push_environment":p.pushEnvironment,"code_challenge":p.codeChallenge,"code_challenge_method":p.codeChallengeMethod]
+        }, exchange: {attempt,ticket in _ = try await voice.loginWithTicket(attemptID:attempt,ticket:ticket)}, nativeLogout: {try await voice.logout()}))
     }
     @State private var login = false
     @State private var userID = ""
@@ -21,7 +26,7 @@ struct PresentedCall: Identifiable { let id: String }
             CustomerVoiceTheme.background.ignoresSafeArea()
             ScrollView {
                 VStack(spacing:22) {
-                    HStack { Text("CARESOFT").font(.headline).tracking(2); Spacer(); if voice.sessionState.session != nil { Button("Đăng xuất") { run { try await voice.logout() } }.accessibilityIdentifier("logout") } }
+                    HStack { Text("CARESOFT").font(.headline).tracking(2); Spacer(); if voice.sessionState.session != nil { Button("Đăng xuất") { run { try await enterprise.logout() } }.accessibilityIdentifier("logout") } }
                     Image(systemName:"headphones.circle.fill").font(.system(size:82)).foregroundColor(CustomerVoiceTheme.accent).padding(.top,32).accessibilityHidden(true)
                     Text("Chăm sóc khách hàng").font(.largeTitle.bold()).multilineTextAlignment(.center)
                     Text("Chúng tôi luôn sẵn sàng hỗ trợ bạn").foregroundColor(CustomerVoiceTheme.secondary).multilineTextAlignment(.center)
@@ -52,14 +57,14 @@ struct PresentedCall: Identifiable { let id: String }
     private var loginForm: some View {
         NavigationView {
             Form {
-                Section(header:Text("Phiên do ứng dụng cung cấp")) {
-                    TextField("User ID",text:$userID).keyboardType(.numberPad).textContentType(.username).accessibilityIdentifier("userID")
-                    SecureField("API token của account",text:$token).textInputAutocapitalization(.never).autocorrectionDisabled().accessibilityIdentifier("apiToken")
-                    Text("Demo nhập trực tiếp để kiểm thử. Ứng dụng tích hợp truyền thông tin từ luồng đăng nhập của mình.").font(.footnote)
+                Section(header:Text("Đăng nhập doanh nghiệp")) {
+                    TextField("Tên đăng nhập doanh nghiệp",text:$userID).textInputAutocapitalization(.never).textContentType(.username).accessibilityIdentifier("enterpriseUsername")
+                    SecureField("Mật khẩu doanh nghiệp",text:$token).textInputAutocapitalization(.never).autocorrectionDisabled().accessibilityIdentifier("enterprisePassword")
+                    Text("Backend doanh nghiệp xác thực tài khoản và cung cấp phiên gọi của khách hàng.").font(.footnote)
                 }
                 if let error { Text(error).foregroundColor(.red) }
                 Button("Thực hiện đăng nhập") {
-                    run { defer { token = "" }; _ = try await voice.login(userID:userID,tenantAPIToken:token); login = false; requestMicrophone() }
+                    run { defer { token = "" }; try await enterprise.login(username:userID,password:token); login = false; requestMicrophone() }
                 }.disabled(busy || userID.isEmpty || token.isEmpty).accessibilityIdentifier("submitLogin")
             }.navigationTitle("Đăng nhập").toolbar { ToolbarItem(placement:.cancellationAction) { Button("Đóng") { login = false } } }
         }
@@ -72,7 +77,7 @@ struct PresentedCall: Identifiable { let id: String }
     private func requestMicrophone() { AVAudioSession.sharedInstance().requestRecordPermission { _ in Task { @MainActor in voice.resume() } } }
     private func run(_ operation: @escaping () async throws -> Void) {
         guard !busy else { return }; busy = true; error = nil
-        Task { defer { busy = false }; do { try await operation() } catch { self.error = (error as? VoiceError)?.code ?? "Không thể thực hiện. Vui lòng kiểm tra kết nối." } }
+        Task { defer { busy = false }; do { try await operation() } catch { self.error = (error as? VoiceError)?.code ?? (error as? EnterpriseSessionError)?.rawValue ?? "Không thể thực hiện. Vui lòng kiểm tra kết nối." } }
     }
     private func reason(_ value: String) -> String {
         ["LOGIN_REQUIRED":"Đăng nhập để gọi và nhận cuộc gọi.","SESSION_UNVERIFIED":"Đang kiểm tra phiên với máy chủ.","VOICE_NOT_READY":"Dịch vụ gọi chưa sẵn sàng.","MICROPHONE_PERMISSION_REQUIRED":"Cho phép micro trong Cài đặt.","CALL_SYSTEM_UNAVAILABLE":"Hệ thống cuộc gọi chưa khả dụng.","INCOMING_UNSUPPORTED_ON_SIMULATOR":"Nhận cuộc gọi cần iPhone qua TestFlight.","PUSH_NOT_REGISTERED":"Chưa đăng ký nhận cuộc gọi qua APNs.","CALL_IN_PROGRESS":"Đang có cuộc gọi."][value] ?? value

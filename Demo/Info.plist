@@ -41,6 +41,8 @@
 	<string>$(VOICE_ACCOUNT_ID)</string>
 	<key>VoiceAppID</key>
 	<string>$(VOICE_APP_ID)</string>
+	<key>VoiceEnterpriseBackendURL</key>
+	<string>$(VOICE_ENTERPRISE_BACKEND_URL)</string>
 	<key>VoiceBackendURL</key>
 	<string>$(VOICE_BACKEND_URL)</string>
 	<key>VoiceHotline</key>

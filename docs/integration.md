@@ -1,5 +1,7 @@
 # Tích hợp Customer Voice trên iOS
 
+Luồng xác thực hiện tại: [phiên doanh nghiệp → ticket PKCE → SDK](host-bootstrap.md).
+
 ## 1. Chuẩn bị thông tin
 
 | Thông tin | Nguồn | Cách dùng |
@@ -8,8 +10,8 @@
 | Account ID | Caresoft cung cấp | `VoiceConfig.accountID` |
 | Caresoft App ID | Tạo ở bước 2 | `VoiceConfig.appID` |
 | Apple Bundle ID, Team ID | Apple Developer | Phải khớp app ký và cấu hình push |
-| User ID | Luồng đăng nhập của ứng dụng | Chuỗi số 1–4294967295 |
-| Account API token | Caresoft cấp qua kênh bảo mật | `login`, không ghi vào source, log hoặc UserDefaults |
+| Phiên doanh nghiệp | Backend doanh nghiệp xác thực, tự lấy user_id Caresoft; không nhập từ app |
+| Credential tích hợp | Chỉ lưu backend doanh nghiệp để issue ticket; không cấp cho SDK/app |
 | Đầu số hỗ trợ | Caresoft cấp sau khi định tuyến | Ứng dụng tự giữ và truyền nguyên bản vào `call` |
 
 Không gửi SIP URI, IP tổng đài hoặc prefix định tuyến từ ứng dụng. Gateway xử lý
@@ -39,16 +41,7 @@ thường, topic `<bundle-id>`. Caresoft chọn cấu hình theo app/platform/en
 
 ## 3. Thêm SDK
 
-Trong Xcode → File → Add Package Dependencies, nhập:
-
-```text
-https://github.com/caresoftgit/user_voice_sdk_ios.git
-```
-
-Chọn **Exact Version 0.1.1**, thêm `CustomerVoice` và `CustomerVoiceUI` vào app target.
-Nếu repo giới hạn truy cập, cần tài khoản Git có quyền đọc. Không thêm LiveKit
-lần thứ hai vì SDK đã chứa target media tương ứng. Xem `Demo/CustomerVoiceDemo.xcodeproj`
-để tham khảo project đã cấu hình package. Không cần build XCFramework để dùng SwiftPM.
+Bộ bàn giao này có binary **0.5.0** và checksum trong `SDK/`. Kiểm tra `SDK/SHA256.json`, chạy `python3 scripts/generate-demo-project.py`, sau đó `cd Demo && pod install`; mở `CustomerVoiceDemo.xcworkspace`. Podfile dùng podspec local và đã kèm các framework cần thiết. Không thêm LiveKit lần thứ hai. Không tham chiếu tag remote chưa được publish.
 
 Bật capabilities **Push Notifications** và **Background Modes**:
 **Audio, AirPlay, and Picture in Picture**, **Voice over IP**, **Remote notifications**.
@@ -106,18 +99,9 @@ thường giúp dừng chuông khi caller hủy hoặc thiết bị khác đã n
 
 ## 5. Đăng nhập từ luồng của ứng dụng
 
-```swift
-let session = try await CustomerVoice.shared.login(
-    userID: authenticatedCustomerID,
-    tenantAPIToken: accountToken
-)
-```
+Dùng [hợp đồng bootstrap](host-bootstrap.md) và helper `Demo/EnterpriseSession.swift`. App gọi `try CustomerVoice.shared.prepareLogin()`, gửi bảy trường preparation tới backend doanh nghiệp qua phiên host, kiểm tra attempt_id rồi gọi `try await CustomerVoice.shared.loginWithTicket(attemptID: preparation.attemptID, ticket: ticket)`.
 
-Gọi sau khi ứng dụng xác thực khách hàng. Không hiển thị màn hình login của SDK:
-SDK không sở hữu form đăng nhập. Demo có form do **host demo** xây dựng để test.
-Token account chỉ dùng cho request login; SDK giữ access/refresh token trong
-Keychain trên thiết bị, không lưu token account. SDK tự khôi phục phiên khi
-khởi tạo; quan sát `sessionState`, không bắt người dùng login lại mỗi lần mở app.
+Form username/password thuộc host demo. Credential tích hợp và user_id server-side không thành input app. SDK giữ access/refresh trong Keychain và tự restore; theo dõi sessionState/readiness. Logout gọi cả SDK và backend doanh nghiệp kể cả một bên lỗi; không fallback về legacy login.
 
 ## 6. Quyền micro và readiness
 
@@ -176,7 +160,7 @@ UI tự hiển thị **Đang kết nối lại…** khi chuyển mạng hoặc m
 Host tự xây UI cần quan sát `voice.$connectionStates` theo `callID`. SDK giữ nguyên
 cuộc gọi khi khôi phục; host không gọi lại `call()` khi nhận trạng thái này.
 Không khôi phục trong 30 giây liên tục thì cuộc gọi đóng và host nhận event lỗi
-`NETWORK_RECOVERY_TIMEOUT`. Xem [API](https://github.com/caresoftgit/user_voice_sdk_ios/blob/0.1.1/docs/api.md) để xử lý state và lỗi.
+`NETWORK_RECOVERY_TIMEOUT`. Xem [API](https://github.com/caresoftgit/user_voice_sdk_ios/blob/0.5.0/docs/api.md) để xử lý state và lỗi.
 
 ## 9. Đăng xuất và đăng nhập lại
 

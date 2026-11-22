@@ -1,5 +1,7 @@
 # Demo và kiểm thử
 
+Luồng xác thực hiện tại: [phiên doanh nghiệp → ticket PKCE → SDK](host-bootstrap.md).
+
 ## Chạy demo
 
 1. Thêm SDK source và dependency đúng bản phát hành.
@@ -8,7 +10,7 @@
    bị Git bỏ qua; không đưa account token hoặc APNs private key vào đây.
 4. Mở `Demo/CustomerVoiceDemo.xcodeproj`, chọn scheme CustomerVoiceDemo.
 5. Dùng simulator để gọi ra thật bằng audio máy tính, hoặc cấu hình TestFlight production để nhận cuộc gọi trên iPhone.
-6. Nhấn **Đăng nhập**, điền User ID và account API token. Demo không lưu token account.
+6. Nhấn **Đăng nhập**, điền username/password doanh nghiệp. Demo không lưu mật khẩu.
 7. Kiểm tra readiness. Nhấn **Gọi CSKH**, không có dialer chủ động hoặc agent status.
 8. Trong cuộc gọi kiểm tra micro, loa thoại/ngoài/Bluetooth, DTMF và kết thúc.
 9. Khi kết thúc, app phải trở về Home. Đăng xuất rồi đăng nhập lại bằng form host.
@@ -18,7 +20,7 @@ Simulator có adapter audio riêng: `canCall` có thể true sau đăng nhập v
 
 ## Kiểm thử tự động
 
-SDK có 33 bài core/presentation và 2 bài media; chạy `swift test` trong repository
+SDK có regression core/presentation/media theo bản source; chạy `swift test` trong repository
 SDK. UI harness ở repository demo dùng gateway/media giả để kiểm tra đăng nhập →
 gọi → kết thúc về Home → logout → mở form login, không dùng dữ liệu khách hàng.
 Kiểm thử tự động không thay thế kiểm thử âm thanh, APNs và mạng thực tế trên iPhone.
@@ -52,13 +54,17 @@ sự thật; background cancellation là tín hiệu hỗ trợ.
 
 ```sh
 # Trong repository demo: chỉ kiểm tra compiler, không ký hoặc gọi thật.
-xcodebuild -project Demo/CustomerVoiceDemo.xcodeproj -scheme CustomerVoiceDemo \
+python3 scripts/generate-demo-project.py
+(cd Demo && pod install)
+xcodebuild -workspace Demo/CustomerVoiceDemo.xcworkspace -scheme CustomerVoiceDemo \
   -destination 'generic/platform=iOS Simulator' ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
   CODE_SIGNING_ALLOWED=NO build
 
+# UI harness cần source checkout SDK 0.5.0 (dùng @testable), không dùng binary shipping.
+CUSTOMER_VOICE_LOCAL_SDK=/absolute/path/user_voice_sdk_ios python3 scripts/generate-ui-test-project.py
 # Chọn UDID Simulator đang boot từ: xcrun simctl list devices booted
 xcodebuild -project Tests/UITestHarness.xcodeproj -scheme CustomerFlowUITests \
-  -destination 'platform=iOS Simulator,id=<SIMULATOR_UDID>' test
+  -destination 'platform=iOS Simulator,id=<SIMULATOR_UDID>' ARCHS=arm64 ONLY_ACTIVE_ARCH=YES test
 ```
 
 UI harness chỉ dùng trong cấu hình Debug để cho phép `@testable import`.

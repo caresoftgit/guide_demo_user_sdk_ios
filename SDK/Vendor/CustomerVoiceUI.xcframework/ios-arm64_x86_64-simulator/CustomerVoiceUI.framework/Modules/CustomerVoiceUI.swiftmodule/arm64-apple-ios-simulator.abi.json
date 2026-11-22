@@ -1,0 +1,956 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "CustomerVoiceUI",
+    "printedName": "CustomerVoiceUI",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "CustomerVoiceUI"
+      },
+      {
+        "kind": "Import",
+        "name": "CustomerVoice",
+        "printedName": "CustomerVoice",
+        "declKind": "Import",
+        "moduleName": "CustomerVoiceUI"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "CustomerVoiceUI"
+      },
+      {
+        "kind": "Import",
+        "name": "AVFAudio",
+        "printedName": "AVFAudio",
+        "declKind": "Import",
+        "moduleName": "CustomerVoiceUI"
+      },
+      {
+        "kind": "Import",
+        "name": "CustomerVoice",
+        "printedName": "CustomerVoice",
+        "declKind": "Import",
+        "moduleName": "CustomerVoiceUI"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "CustomerVoiceTheme",
+        "printedName": "CustomerVoiceTheme",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "accent",
+            "printedName": "accent",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Color",
+                "printedName": "SwiftUI.Color",
+                "usr": "s:7SwiftUI5ColorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15CustomerVoiceUI0aB5ThemeO6accent05SwiftC05ColorVvpZ",
+            "mangledName": "$s15CustomerVoiceUI0aB5ThemeO6accent05SwiftC05ColorVvpZ",
+            "moduleName": "CustomerVoiceUI",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Color",
+                    "printedName": "SwiftUI.Color",
+                    "usr": "s:7SwiftUI5ColorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15CustomerVoiceUI0aB5ThemeO6accent05SwiftC05ColorVvgZ",
+                "mangledName": "$s15CustomerVoiceUI0aB5ThemeO6accent05SwiftC05ColorVvgZ",
+                "moduleName": "CustomerVoiceUI",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "ink",
+            "printedName": "ink",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Color",
+                "printedName": "SwiftUI.Color",
+                "usr": "s:7SwiftUI5ColorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15CustomerVoiceUI0aB5ThemeO3ink05SwiftC05ColorVvpZ",
+            "mangledName": "$s15CustomerVoiceUI0aB5ThemeO3ink05SwiftC05ColorVvpZ",
+            "moduleName": "CustomerVoiceUI",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Color",
+                    "printedName": "SwiftUI.Color",
+                    "usr": "s:7SwiftUI5ColorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15CustomerVoiceUI0aB5ThemeO3ink05SwiftC05ColorVvgZ",
+                "mangledName": "$s15CustomerVoiceUI0aB5ThemeO3ink05SwiftC05ColorVvgZ",
+                "moduleName": "CustomerVoiceUI",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "secondary",
+            "printedName": "secondary",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Color",
+                "printedName": "SwiftUI.Color",
+                "usr": "s:7SwiftUI5ColorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15CustomerVoiceUI0aB5ThemeO9secondary05SwiftC05ColorVvpZ",
+            "mangledName": "$s15CustomerVoiceUI0aB5ThemeO9secondary05SwiftC05ColorVvpZ",
+            "moduleName": "CustomerVoiceUI",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Color",
+                    "printedName": "SwiftUI.Color",
+                    "usr": "s:7SwiftUI5ColorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15CustomerVoiceUI0aB5ThemeO9secondary05SwiftC05ColorVvgZ",
+                "mangledName": "$s15CustomerVoiceUI0aB5ThemeO9secondary05SwiftC05ColorVvgZ",
+                "moduleName": "CustomerVoiceUI",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "background",
+            "printedName": "background",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "LinearGradient",
+                "printedName": "SwiftUI.LinearGradient",
+                "usr": "s:7SwiftUI14LinearGradientV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15CustomerVoiceUI0aB5ThemeO10background05SwiftC014LinearGradientVvpZ",
+            "mangledName": "$s15CustomerVoiceUI0aB5ThemeO10background05SwiftC014LinearGradientVvpZ",
+            "moduleName": "CustomerVoiceUI",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "LinearGradient",
+                    "printedName": "SwiftUI.LinearGradient",
+                    "usr": "s:7SwiftUI14LinearGradientV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15CustomerVoiceUI0aB5ThemeO10background05SwiftC014LinearGradientVvgZ",
+                "mangledName": "$s15CustomerVoiceUI0aB5ThemeO10background05SwiftC014LinearGradientVvgZ",
+                "moduleName": "CustomerVoiceUI",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:15CustomerVoiceUI0aB5ThemeO",
+        "mangledName": "$s15CustomerVoiceUI0aB5ThemeO",
+        "moduleName": "CustomerVoiceUI",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "CustomerVoiceCallView",
+        "printedName": "CustomerVoiceCallView",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(callID:voice:onEnded:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CustomerVoiceCallView",
+                "printedName": "CustomerVoiceUI.CustomerVoiceCallView",
+                "usr": "s:15CustomerVoiceUI0aB8CallViewV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CustomerVoice",
+                "printedName": "CustomerVoice.CustomerVoice",
+                "hasDefaultArg": true,
+                "usr": "s:13CustomerVoiceAAC"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "() -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "hasDefaultArg": true
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:15CustomerVoiceUI0aB8CallViewV6callID5voice7onEndedACSS_0aB0AGCyyctcfc",
+            "mangledName": "$s15CustomerVoiceUI0aB8CallViewV6callID5voice7onEndedACSS_0aB0AGCyyctcfc",
+            "moduleName": "CustomerVoiceUI",
+            "declAttributes": [
+              "Custom",
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Var",
+            "name": "body",
+            "printedName": "body",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "OpaqueTypeArchetype",
+                "printedName": "some SwiftUI.View",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "View",
+                    "printedName": "SwiftUI.View",
+                    "usr": "s:7SwiftUI4ViewP"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15CustomerVoiceUI0aB8CallViewV4bodyQrvp",
+            "mangledName": "$s15CustomerVoiceUI0aB8CallViewV4bodyQrvp",
+            "moduleName": "CustomerVoiceUI",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "OpaqueTypeArchetype",
+                    "printedName": "some SwiftUI.View",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "View",
+                        "printedName": "SwiftUI.View",
+                        "usr": "s:7SwiftUI4ViewP"
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15CustomerVoiceUI0aB8CallViewV4bodyQrvg",
+                "mangledName": "$s15CustomerVoiceUI0aB8CallViewV4bodyQrvg",
+                "moduleName": "CustomerVoiceUI",
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:15CustomerVoiceUI0aB8CallViewV",
+        "mangledName": "$s15CustomerVoiceUI0aB8CallViewV",
+        "moduleName": "CustomerVoiceUI",
+        "declAttributes": [
+          "AccessControl",
+          "Custom"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "View",
+            "printedName": "View",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Body",
+                "printedName": "Body",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "OpaqueTypeArchetype",
+                    "printedName": "some SwiftUI.View",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "View",
+                        "printedName": "SwiftUI.View",
+                        "usr": "s:7SwiftUI4ViewP"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "usr": "s:7SwiftUI4ViewP",
+            "mangledName": "$s7SwiftUI4ViewP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "CustomerVoiceUI"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "CustomerVoiceUI"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "CustomerVoiceUI"
+      },
+      {
+        "kind": "Import",
+        "name": "CustomerVoice",
+        "printedName": "CustomerVoice",
+        "declKind": "Import",
+        "moduleName": "CustomerVoiceUI"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "CustomerVoiceUI",
+        "printedName": "CustomerVoiceUI",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "install",
+            "printedName": "install(on:voice:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CustomerVoicePresenter",
+                "printedName": "CustomerVoiceUI.CustomerVoicePresenter",
+                "usr": "s:15CustomerVoiceUI0aB9PresenterC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIViewController",
+                "printedName": "UIKit.UIViewController",
+                "usr": "c:objc(cs)UIViewController"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CustomerVoice",
+                "printedName": "CustomerVoice.CustomerVoice",
+                "hasDefaultArg": true,
+                "usr": "s:13CustomerVoiceAAC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15CustomerVoiceUIAAO7install2on5voiceAA0aB9PresenterCSo16UIViewControllerC_0aB0AJCtFZ",
+            "mangledName": "$s15CustomerVoiceUIAAO7install2on5voiceAA0aB9PresenterCSo16UIViewControllerC_0aB0AJCtFZ",
+            "moduleName": "CustomerVoiceUI",
+            "static": true,
+            "declAttributes": [
+              "Custom",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "controller",
+            "printedName": "controller(callID:voice:onEnded:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UIViewController",
+                "printedName": "UIKit.UIViewController",
+                "usr": "c:objc(cs)UIViewController"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CustomerVoice",
+                "printedName": "CustomerVoice.CustomerVoice",
+                "hasDefaultArg": true,
+                "usr": "s:13CustomerVoiceAAC"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "() -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "hasDefaultArg": true
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15CustomerVoiceUIAAO10controller6callID5voice7onEndedSo16UIViewControllerCSS_0aB0AICyyctFZ",
+            "mangledName": "$s15CustomerVoiceUIAAO10controller6callID5voice7onEndedSo16UIViewControllerCSS_0aB0AICyyctFZ",
+            "moduleName": "CustomerVoiceUI",
+            "static": true,
+            "declAttributes": [
+              "Custom",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:15CustomerVoiceUIAAO",
+        "mangledName": "$s15CustomerVoiceUIAAO",
+        "moduleName": "CustomerVoiceUI",
+        "declAttributes": [
+          "AccessControl",
+          "Custom"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "CustomerVoicePresenter",
+        "printedName": "CustomerVoicePresenter",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "showCall",
+            "printedName": "showCall(callID:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15CustomerVoiceUI0aB9PresenterC8showCall6callIDySS_tF",
+            "mangledName": "$s15CustomerVoiceUI0aB9PresenterC8showCall6callIDySS_tF",
+            "moduleName": "CustomerVoiceUI",
+            "declAttributes": [
+              "Custom",
+              "Final",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:15CustomerVoiceUI0aB9PresenterC",
+        "mangledName": "$s15CustomerVoiceUI0aB9PresenterC",
+        "moduleName": "CustomerVoiceUI",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "Custom"
+        ],
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CustomerVoice",
+        "printedName": "CustomerVoice",
+        "declKind": "Import",
+        "moduleName": "CustomerVoiceUI",
+        "declAttributes": [
+          "Exported"
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 139,
+      "length": 1,
+      "value": "8"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 141,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 151,
+      "length": 3,
+      "value": "126"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 155,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 164,
+      "length": 3,
+      "value": "117"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 168,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 211,
+      "length": 2,
+      "value": "24"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 214,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 224,
+      "length": 2,
+      "value": "47"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 227,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 236,
+      "length": 2,
+      "value": "53"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 239,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 288,
+      "length": 3,
+      "value": "100"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 292,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 302,
+      "length": 3,
+      "value": "117"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 306,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 315,
+      "length": 3,
+      "value": "122"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 319,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 392,
+      "length": 3,
+      "value": "232"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 396,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 406,
+      "length": 3,
+      "value": "245"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 410,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 419,
+      "length": 3,
+      "value": "242"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 423,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 438,
+      "length": 3,
+      "value": "244"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 442,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 452,
+      "length": 3,
+      "value": "247"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 456,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 465,
+      "length": 3,
+      "value": "247"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 469,
+      "length": 3,
+      "value": "255"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 717,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 755,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 793,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 913,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 6385,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 6409,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 7818,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "StringLiteral",
+      "offset": 7880,
+      "length": 11,
+      "value": "\"%02d:%02d\""
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 7900,
+      "length": 2,
+      "value": "60"
+    },
+    {
+      "filePath": "\/Users\/windy\/Work\/windy\/rea-voice-sdk\/.worktrees\/user_voice_sdk_ios\/Sources\/CustomerVoiceUI\/CustomerVoiceCallView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 7911,
+      "length": 2,
+      "value": "60"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # Production signing và APNs
 
+Luồng xác thực hiện tại: [phiên doanh nghiệp → ticket PKCE → SDK](host-bootstrap.md).
+
 Bản demo đã chọn APNs **production**. Cài trực tiếp một bản ký Apple Development
 sẽ nhận token sandbox và **không tương thích** cấu hình production này.
 Không đổi environment tự động để che lỗi signing.

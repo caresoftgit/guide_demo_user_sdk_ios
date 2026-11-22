@@ -1,8 +1,10 @@
 # Test gọi ra trên Simulator
 
+Luồng xác thực hiện tại: [phiên doanh nghiệp → ticket PKCE → SDK](host-bootstrap.md).
+
 1. Mở Simulator và chọn máy đã cài demo; mở app **CSKH Voice**.
 2. Cho phép micro khi được hỏi. macOS cũng phải cho phép Simulator dùng micro.
-3. Nhấn **Đăng nhập**, điền User ID và account API token của môi trường test.
+3. Nhấn **Đăng nhập**, điền username/password doanh nghiệp test.
 4. Đợi **Sẵn sàng gọi hỗ trợ**. Việc chưa sẵn sàng nhận cuộc gọi trên Simulator là bình thường.
 5. Nhấn **Gọi CSKH**. Demo dùng đầu số đã điền trong `Demo/Config/Local.xcconfig`, kết nối gateway và LiveKit thật.
 6. Dùng micro/loa máy tính. Kiểm tra âm thanh hai chiều với hệ thống, mute và DTMF khi ACTIVE.

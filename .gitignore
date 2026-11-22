@@ -12,3 +12,8 @@ xcuserdata/
 *.log
 Config.xcconfig
 Demo/Config/Local.xcconfig
+
+Demo/Pods/
+Demo/CustomerVoiceDemo.xcworkspace/
+
+HarnessDerivedData/

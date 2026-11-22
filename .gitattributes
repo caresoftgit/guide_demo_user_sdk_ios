@@ -1,0 +1,2 @@
+# Preserve compiler/vendor output byte-for-byte; native inventory verifies integrity.
+SDK/Vendor/** -whitespace

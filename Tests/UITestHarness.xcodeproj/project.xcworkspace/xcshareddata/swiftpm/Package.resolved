@@ -1,5 +1,5 @@
 {
-  "originHash" : "5ae7369bb6b2a8688a28927bbad00a5409038a87bc8a9b3f49e673ad2576ad54",
+  "originHash" : "cab3e21d1bca0de9ca5e5ded1cfdb19f0950c0b69f8559e5e4f14dc35b43bf24",
   "pins" : [
     {
       "identity" : "jwt-kit",
@@ -44,15 +44,6 @@
       "state" : {
         "revision" : "fed2f76413026cb0ae90999a8c9116949dfe6aa6",
         "version" : "1.41.0"
-      }
-    },
-    {
-      "identity" : "user_voice_sdk_ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/caresoftgit/user_voice_sdk_ios.git",
-      "state" : {
-        "revision" : "3b9f764e202b022bff5ab011c90a141f41e240fd",
-        "version" : "0.1.1"
       }
     },
     {

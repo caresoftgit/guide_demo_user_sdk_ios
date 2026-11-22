@@ -1,0 +1,287 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3 effective-5.10 (swiftlang-6.3.0.123.5 clang-2100.0.123.102)
+// swift-module-flags: -target arm64-apple-ios15.1-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-concise-pound-file -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name CustomerVoice
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3
+import AVFAudio
+import CallKit
+import Combine
+import CryptoKit
+import Foundation
+import Network
+import PushKit
+import Security
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class CustomerVoice : Foundation.ObservableObject {
+  @_Concurrency.MainActor public static let shared: CustomerVoice
+  @Combine.Published<SessionState> @_projectedValueProperty($sessionState) @_Concurrency.MainActor final public var sessionState: SessionState {
+    get
+  }
+  @_Concurrency.MainActor final public var $sessionState: Combine.Published<SessionState>.Publisher {
+    get
+  }
+  @Combine.Published<VoiceReadiness> @_projectedValueProperty($readiness) @_Concurrency.MainActor final public var readiness: VoiceReadiness {
+    get
+  }
+  @_Concurrency.MainActor final public var $readiness: Combine.Published<VoiceReadiness>.Publisher {
+    get
+  }
+  @Combine.Published<[CallSnapshot]> @_projectedValueProperty($calls) @_Concurrency.MainActor final public var calls: [CallSnapshot] {
+    get
+  }
+  @_Concurrency.MainActor final public var $calls: Combine.Published<[CallSnapshot]>.Publisher {
+    get
+  }
+  @Combine.Published<[Swift.String : CallAudioState]> @_projectedValueProperty($audioStates) @_Concurrency.MainActor final public var audioStates: [Swift.String : CallAudioState] {
+    get
+  }
+  @_Concurrency.MainActor final public var $audioStates: Combine.Published<[Swift.String : CallAudioState]>.Publisher {
+    get
+  }
+  @Combine.Published<[Swift.String : CallConnectionState]> @_projectedValueProperty($connectionStates) @_Concurrency.MainActor final public var connectionStates: [Swift.String : CallConnectionState] {
+    get
+  }
+  @_Concurrency.MainActor final public var $connectionStates: Combine.Published<[Swift.String : CallConnectionState]>.Publisher {
+    get
+  }
+  @_Concurrency.MainActor final public var events: Combine.AnyPublisher<VoiceEvent, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var configuration: VoiceConfig? {
+    get
+  }
+  @_Concurrency.MainActor convenience public init()
+  @_Concurrency.MainActor final public func initialize(config: VoiceConfig) throws
+  @_Concurrency.MainActor final public func prepareLogin() throws -> LoginPreparation
+  @discardableResult
+  @_Concurrency.MainActor final public func loginWithTicket(attemptID: Swift.String, ticket: Swift.String) async throws -> SessionInfo
+  @available(*, deprecated, message: "Use prepareLogin and loginWithTicket. Legacy mode must be explicitly enabled.")
+  @discardableResult
+  @_Concurrency.MainActor final public func login(userID: Swift.String, tenantAPIToken: Swift.String) async throws -> SessionInfo
+  @_Concurrency.MainActor final public func logout() async throws
+  @_Concurrency.MainActor final public func updatePushToken(_ token: Swift.String) async throws
+  @_Concurrency.MainActor final public func updateNotificationPushToken(_ token: Swift.String) async throws
+  @_Concurrency.MainActor final public func unregisterPushToken() async throws
+  @_Concurrency.MainActor final public func unregisterNotificationPushToken() async throws
+  @discardableResult
+  @_Concurrency.MainActor final public func checkReadiness() async throws -> VoiceReadiness
+  @_Concurrency.MainActor final public func currentTime() -> Foundation.Date
+  @_Concurrency.MainActor final public func isCallPresentable(_ id: Swift.String) -> Swift.Bool
+  @discardableResult
+  @_Concurrency.MainActor final public func call(businessNumber: Swift.String) async throws -> CallSnapshot
+  @_Concurrency.MainActor final public func answer(callID: Swift.String) async throws
+  @_Concurrency.MainActor final public func reject(callID: Swift.String) async throws
+  @_Concurrency.MainActor final public func hangup(callID: Swift.String) async throws
+  @_Concurrency.MainActor final public func setMuted(callID: Swift.String, muted: Swift.Bool) async throws
+  @_Concurrency.MainActor final public func getAvailableAudioRoutes(callID: Swift.String) -> [AudioRoute]
+  @_Concurrency.MainActor final public func selectAudioRoute(callID: Swift.String, route: AudioRoute) async throws
+  @_Concurrency.MainActor final public func sendDtmf(callID: Swift.String, digit: Swift.Character) async throws
+  @_Concurrency.MainActor final public func handleVoIPPush(_ payload: [Swift.AnyHashable : Any], completion: @escaping () -> Swift.Void)
+  @discardableResult
+  @_Concurrency.MainActor final public func handleRemoteNotification(_ payload: [Swift.AnyHashable : Any]) async -> Swift.Bool
+  @_Concurrency.MainActor final public func didRegisterForRemoteNotifications(deviceToken: Foundation.Data)
+  @_Concurrency.MainActor final public func synchronize() async throws
+  @_Concurrency.MainActor final public func resume()
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+@objc public protocol CVVoiceDelegate {
+  @objc func customerVoiceDidUpdate(session: Foundation.NSDictionary, readiness: Foundation.NSDictionary, calls: Foundation.NSArray)
+  @objc optional func customerVoiceDidReceive(event: Foundation.NSDictionary)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor @objc(CVCustomerVoice) final public class CustomerVoiceObjC : ObjectiveC.NSObject {
+  @objc @_Concurrency.MainActor public static let shared: CustomerVoiceObjC
+  @objc @_Concurrency.MainActor weak final public var delegate: (any CVVoiceDelegate)?
+  @objc @_Concurrency.MainActor final public func initialize(backendURL: Foundation.URL, accountID: Swift.String, appID: Swift.String) throws
+  @objc @_Concurrency.MainActor final public func prepareLogin(completion: @escaping (Foundation.NSDictionary?, Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func loginWithTicket(attemptID: Swift.String, ticket: Swift.String, completion: @escaping (Foundation.NSDictionary?, Foundation.NSError?) -> Swift.Void)
+  @available(*, deprecated, message: "Use prepareLogin and loginWithTicket with host-issued tickets.")
+  @objc @_Concurrency.MainActor final public func login(userID: Swift.String, tenantAPIToken: Swift.String, completion: @escaping (Foundation.NSDictionary?, Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func logout(completion: @escaping (Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func checkReadiness(completion: @escaping (Foundation.NSDictionary?, Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func call(businessNumber: Swift.String, completion: @escaping (Swift.String?, Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func answer(callID: Swift.String, completion: @escaping (Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func reject(callID: Swift.String, completion: @escaping (Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func hangup(callID: Swift.String, completion: @escaping (Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func setMuted(callID: Swift.String, muted: Swift.Bool, completion: @escaping (Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func sendDtmf(callID: Swift.String, digit: Swift.String, completion: @escaping (Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func getAudioRoutes(callID: Swift.String) -> Foundation.NSArray
+  @objc @_Concurrency.MainActor final public func selectAudioRoute(callID: Swift.String, routeID: Swift.String, completion: @escaping (Foundation.NSError?) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func didRegisterForRemoteNotifications(deviceToken: Foundation.Data)
+  @objc @_Concurrency.MainActor final public func handleRemoteNotification(_ payload: [Swift.AnyHashable : Any], completion: @escaping (Swift.Bool) -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func handleVoIPPush(_ payload: [Swift.AnyHashable : Any], completion: @escaping () -> Swift.Void)
+  @objc @_Concurrency.MainActor final public func resume()
+  @objc deinit
+}
+public struct LoginPreparation : Swift.Equatable, Swift.Sendable {
+  public let attemptID: Swift.String
+  public let installationID: Swift.String
+  public let platform: Swift.String
+  public let applicationID: Swift.String
+  public let pushEnvironment: Swift.String
+  public let codeChallenge: Swift.String
+  public let codeChallengeMethod: Swift.String
+  public var dictionary: [Swift.String : Any] {
+    get
+  }
+  public static func == (a: LoginPreparation, b: LoginPreparation) -> Swift.Bool
+}
+public struct VoiceError : Swift.Error, Foundation.LocalizedError, Swift.Equatable, Swift.CustomStringConvertible {
+  public let code: Swift.String
+  public let status: Swift.Int
+  public init(_ code: Swift.String, status: Swift.Int = 0)
+  public var errorDescription: Swift.String? {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+  public static func == (a: VoiceError, b: VoiceError) -> Swift.Bool
+}
+public enum PushEnvironment : Swift.String, Swift.Codable, Swift.Sendable {
+  case production, sandbox
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VoiceConfig : Swift.Equatable, Swift.Sendable {
+  public let backendURL: Foundation.URL
+  public let accountID: Swift.String
+  public let appID: Swift.String
+  public let pushEnvironment: PushEnvironment
+  public let supportName: Swift.String
+  public let managesPushKit: Swift.Bool
+  public let applicationID: Swift.String?
+  public let legacyLoginEnabled: Swift.Bool
+  public init(backendURL: Foundation.URL, accountID: Swift.String, appID: Swift.String, pushEnvironment: PushEnvironment = .production, supportName: Swift.String = "Chăm sóc khách hàng", managesPushKit: Swift.Bool = true, applicationID: Swift.String? = Bundle.main.bundleIdentifier, legacyLoginEnabled: Swift.Bool = false) throws
+  public static func == (a: VoiceConfig, b: VoiceConfig) -> Swift.Bool
+}
+public struct SessionInfo : Swift.Equatable, Swift.Sendable {
+  public let userID: Swift.String
+  public let sessionID: Swift.String
+  public let expiresAt: Foundation.Date
+  public let sessionExpiresAt: Foundation.Date
+  public let authProtocol: Swift.Int
+  public var dictionary: [Swift.String : Any] {
+    get
+  }
+  public static func == (a: SessionInfo, b: SessionInfo) -> Swift.Bool
+}
+public enum SessionState : Swift.Equatable, Swift.Sendable {
+  case loggedOut
+  case authenticated(SessionInfo)
+  case loginRequired(reason: Swift.String)
+  public var session: SessionInfo? {
+    get
+  }
+  public static func == (a: SessionState, b: SessionState) -> Swift.Bool
+}
+public enum SessionStatus : Swift.String, Swift.Sendable {
+  case loggedOut, valid, unknown, expired
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum CallDirection : Swift.String, Swift.Codable, Swift.Sendable {
+  case inbound, outbound
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct CallSnapshot : Swift.Codable, Swift.Equatable, Swift.Identifiable, Swift.Sendable {
+  public let callID: Swift.String
+  public let direction: CallDirection
+  public let state: Swift.String
+  public let version: Swift.Int64
+  public let businessNumber: Swift.String?
+  public let ringingExpiresAt: Foundation.Date?
+  public let mediaExpiresAt: Foundation.Date?
+  public let endedAt: Foundation.Date?
+  public let endReason: Swift.String?
+  public let deviceStatus: Swift.String?
+  public let isOwner: Swift.Bool
+  public var id: Swift.String {
+    get
+  }
+  public var terminal: Swift.Bool {
+    get
+  }
+  public var lost: Swift.Bool {
+    get
+  }
+  public var canControl: Swift.Bool {
+    get
+  }
+  public func canRing(at now: Foundation.Date) -> Swift.Bool
+  public init(callID: Swift.String, direction: CallDirection, state: Swift.String, version: Swift.Int64, businessNumber: Swift.String? = nil, ringingExpiresAt: Foundation.Date? = nil, mediaExpiresAt: Foundation.Date? = nil, endedAt: Foundation.Date? = nil, endReason: Swift.String? = nil, deviceStatus: Swift.String? = nil, isOwner: Swift.Bool = false)
+  public static func == (a: CallSnapshot, b: CallSnapshot) -> Swift.Bool
+  public typealias ID = Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct AudioRoute : Swift.Equatable, Swift.Identifiable, Swift.Sendable {
+  public let id: Swift.String
+  public let name: Swift.String
+  public let selected: Swift.Bool
+  public init(id: Swift.String, name: Swift.String, selected: Swift.Bool = false)
+  public static func == (a: AudioRoute, b: AudioRoute) -> Swift.Bool
+  public typealias ID = Swift.String
+}
+public enum CallConnectionState : Swift.String, Swift.Sendable {
+  case connecting, connected, reconnecting
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct CallAudioState : Swift.Equatable, Swift.Sendable {
+  public var muted: Swift.Bool
+  public var routes: [AudioRoute]
+  public init(muted: Swift.Bool = false, routes: [AudioRoute] = [])
+  public static func == (a: CallAudioState, b: CallAudioState) -> Swift.Bool
+}
+public struct VoiceEvent : Swift.Equatable, Swift.Sendable {
+  public let type: Swift.String
+  public let callID: Swift.String?
+  public let code: Swift.String?
+  public init(type: Swift.String, callID: Swift.String? = nil, code: Swift.String? = nil)
+  public static func == (a: VoiceEvent, b: VoiceEvent) -> Swift.Bool
+}
+public struct VoiceReadiness : Swift.Equatable, Swift.Sendable {
+  public let sessionStatus: SessionStatus
+  public let isLoggedIn: Swift.Bool
+  public let canCall: Swift.Bool
+  public let canReceive: Swift.Bool
+  public let userID: Swift.String?
+  public let reasons: [Swift.String]
+  public let checkedAt: Foundation.Date?
+  public let controlConnected: Swift.Bool
+  public static let loggedOut: VoiceReadiness
+  public static func == (a: VoiceReadiness, b: VoiceReadiness) -> Swift.Bool
+}
+public enum CustomerVoiceVersion {
+  public static let current: Swift.String
+}
+extension CustomerVoice : Swift.Sendable {}
+extension CustomerVoiceObjC : Swift.Sendable {}
+extension PushEnvironment : Swift.Equatable {}
+extension PushEnvironment : Swift.Hashable {}
+extension PushEnvironment : Swift.RawRepresentable {}
+extension SessionStatus : Swift.Equatable {}
+extension SessionStatus : Swift.Hashable {}
+extension SessionStatus : Swift.RawRepresentable {}
+extension CallDirection : Swift.Equatable {}
+extension CallDirection : Swift.Hashable {}
+extension CallDirection : Swift.RawRepresentable {}
+extension CallConnectionState : Swift.Equatable {}
+extension CallConnectionState : Swift.Hashable {}
+extension CallConnectionState : Swift.RawRepresentable {}
