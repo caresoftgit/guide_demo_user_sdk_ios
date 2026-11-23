@@ -4,25 +4,28 @@ Luồng xác thực hiện tại: [phiên doanh nghiệp → ticket PKCE → SDK
 
 ## Chạy demo
 
-1. Thêm SDK source và dependency đúng bản phát hành.
+1. Dùng SDK binary và dependency đi kèm đúng bản phát hành.
 2. Sao chép `Demo/Config/Config.example.xcconfig` thành `Demo/Config/Local.xcconfig`.
-3. Điền gateway, account, App ID, đầu số được cấp, Bundle ID, Apple Team. File local
+3. Điền gateway, account, App ID, đầu số được cấp, Bundle ID, Apple Team và VOICE_BOOTSTRAP_URL của ứng dụng doanh nghiệp. File local
    bị Git bỏ qua; không đưa account token hoặc APNs private key vào đây.
-4. Mở `Demo/CustomerVoiceDemo.xcodeproj`, chọn scheme CustomerVoiceDemo.
+4. Chạy `python3 scripts/generate-demo-project.py`, `cd Demo && pod install`, mở `CustomerVoiceDemo.xcworkspace`, chọn scheme CustomerVoiceDemo.
 5. Dùng simulator để gọi ra thật bằng audio máy tính, hoặc cấu hình TestFlight production để nhận cuộc gọi trên iPhone.
-6. Nhấn **Đăng nhập**, điền username/password doanh nghiệp. Demo không lưu mật khẩu.
+6. Dùng phiên đăng nhập doanh nghiệp có sẵn; nối HTTP client đã xác thực vào HostBackend. Nhấn **Kết nối Voice**, không có form username/password hoặc ID khách hàng.
 7. Kiểm tra readiness. Nhấn **Gọi CSKH**, không có dialer chủ động hoặc agent status.
 8. Trong cuộc gọi kiểm tra micro, loa thoại/ngoài/Bluetooth, DTMF và kết thúc.
-9. Khi kết thúc, app phải trở về Home. Đăng xuất rồi đăng nhập lại bằng form host.
+9. Khi kết thúc, app phải trở về Home. Ngắt Voice rồi kết nối lại bằng phiên ứng dụng còn hiệu lực; test logout ứng dụng và đổi tài khoản riêng.
 
 Không dùng simulator để kết luận APNs/PushKit/CallKit màn hình khóa đã hoạt động.
 Simulator có adapter audio riêng: `canCall` có thể true sau đăng nhập và cấp micro; `canReceive=false`. Không giả lập CallKit hoặc APNs.
 
 ## Kiểm thử tự động
 
+Trong repo demo, `swift test` chạy kiểm thử HostBackend: whitelist bảy trường, phiên host hết hạn, response sai, HTTPS/redirect, lỗi transport và giới hạn kích thước. Không gọi backend/tổng đài thật.
+
+
 SDK có regression core/presentation/media theo bản source; chạy `swift test` trong repository
 SDK. UI harness ở repository demo dùng gateway/media giả để kiểm tra đăng nhập →
-gọi → kết thúc về Home → logout → mở form login, không dùng dữ liệu khách hàng.
+gọi → kết thúc về Home → ngắt Voice → kết nối lại; phiên host hết hạn phải yêu cầu đăng nhập ứng dụng và không mở form mẫu, không dùng dữ liệu khách hàng.
 Kiểm thử tự động không thay thế kiểm thử âm thanh, APNs và mạng thực tế trên iPhone.
 
 ## Ma trận nghiệm thu trên iPhone thật
@@ -68,5 +71,12 @@ xcodebuild -project Tests/UITestHarness.xcodeproj -scheme CustomerFlowUITests \
 ```
 
 UI harness chỉ dùng trong cấu hình Debug để cho phép `@testable import`.
-Kiểm thử gateway nằm ở repository gateway và dùng DB/Redis cô lập.
 Không ghi token, private key, SDP hoặc nội dung push vào log công khai.
+
+## Bảo mật bàn giao
+
+- Source/config/binary chỉ có placeholder hoặc cấu hình công khai; không nhúng credential hay tài khoản test.
+- Chặn user_id/account/host_session_ref do app tự chọn; ticket hết hạn/dùng lại/sai PKCE phải bị server từ chối.
+- HTTP 401 yêu cầu đăng nhập ứng dụng, không fallback legacy hoặc backend login mẫu.
+- Logout ứng dụng chặn bootstrap và ghi HOST-revoke outbox, retry/poll tới khi server xác nhận.
+- UI harness/mobile simulator không xác nhận chất lượng audio, APNs, Bluetooth hoặc chuyển mạng trên thiết bị thật.

@@ -1,29 +1,30 @@
 import XCTest
 final class CustomerFlowUITests: XCTestCase {
-    func testLoginCallEndReturnsHomeAndLogoutAllowsLoginAgain() {
+    func testConnectDoesNotCollectBusinessCredentials() {
         let app = XCUIApplication(); app.launch()
-        let login = app.buttons["login"]; XCTAssertTrue(login.waitForExistence(timeout:10)); login.tap()
-        app.textFields["enterpriseUsername"].tap(); app.textFields["enterpriseUsername"].typeText("123")
-        app.secureTextFields["enterprisePassword"].tap(); app.secureTextFields["enterprisePassword"].typeText("fixture-token")
-        app.buttons["submitLogin"].tap()
+        XCTAssertTrue(app.buttons["login"].waitForExistence(timeout:10)); app.buttons["login"].tap()
+        XCTAssertEqual(app.textFields.count, 0); XCTAssertEqual(app.secureTextFields.count, 0)
+        XCTAssertTrue(app.buttons["logout"].waitForExistence(timeout:10))
+    }
+    func testCallEndDisconnectAndReconnectFromExistingApplicationSession() {
+        let app = XCUIApplication(); app.launch()
+        XCTAssertTrue(app.buttons["login"].waitForExistence(timeout:10)); app.buttons["login"].tap()
         let logout = app.buttons["logout"]; XCTAssertTrue(logout.waitForExistence(timeout:10))
-        let support = app.buttons["callSupport"]; XCTAssertTrue(support.isEnabled); support.tap()
-        let end = app.buttons["endCall"]; XCTAssertTrue(end.waitForExistence(timeout:10))
-        let attachment = XCTAttachment(screenshot:app.screenshot()); attachment.name = "Active customer call"; attachment.lifetime = .keepAlways; add(attachment)
-        end.tap(); XCTAssertTrue(support.waitForExistence(timeout:10)); XCTAssertFalse(end.exists)
-        logout.tap(); XCTAssertTrue(login.waitForExistence(timeout:10)); login.tap()
-        XCTAssertTrue(app.textFields["enterpriseUsername"].waitForExistence(timeout:5))
-        XCTAssertEqual(app.secureTextFields["enterprisePassword"].value as? String,"Mật khẩu doanh nghiệp")
+        let support = app.buttons["callSupport"]
+        let ready = XCTNSPredicateExpectation(predicate:NSPredicate(format:"enabled == true"),object:support)
+        XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:10),.completed); support.tap()
+        let end = app.buttons["endCall"]; XCTAssertTrue(end.waitForExistence(timeout:10)); end.tap()
+        XCTAssertTrue(logout.waitForExistence(timeout:10)); XCTAssertFalse(end.exists)
+        app.buttons["rebuildHome"].tap(); logout.tap()
+        XCTAssertTrue(app.buttons["login"].waitForExistence(timeout:10)); app.buttons["login"].tap()
+        XCTAssertTrue(logout.waitForExistence(timeout:10)); XCTAssertEqual(app.secureTextFields.count,0)
     }
-    func testRebuiltHomeRetainsEnterpriseSessionForLogout() {
-        let app=XCUIApplication();app.launch()
-        XCTAssertTrue(app.buttons["login"].waitForExistence(timeout:10));app.buttons["login"].tap()
-        app.textFields["enterpriseUsername"].tap();app.textFields["enterpriseUsername"].typeText("customer")
-        app.secureTextFields["enterprisePassword"].tap();app.secureTextFields["enterprisePassword"].typeText("password")
-        app.buttons["submitLogin"].tap();XCTAssertTrue(app.buttons["logout"].waitForExistence(timeout:10))
-        app.buttons["rebuildHome"].tap();app.buttons["logout"].tap()
-        XCTAssertTrue(app.buttons["login"].waitForExistence(timeout:10))
-        XCTAssertEqual(app.staticTexts["hostRevocations"].label,"Host revocations: 1")
+    func testExpiredApplicationSessionRequestsApplicationLoginWithoutForm() {
+        let app=XCUIApplication(); app.launchArguments=["--host-session-expired"]; app.launch()
+        XCTAssertTrue(app.buttons["login"].waitForExistence(timeout:10)); app.buttons["login"].tap()
+        let error=app.staticTexts["homeError"]; XCTAssertTrue(error.waitForExistence(timeout:10))
+        XCTAssertEqual(error.label,"Đăng nhập ứng dụng doanh nghiệp trước khi kết nối Voice.")
+        XCTAssertEqual(app.textFields.count,0); XCTAssertEqual(app.secureTextFields.count,0)
+        XCTAssertFalse(app.buttons["callSupport"].isEnabled)
     }
-
 }

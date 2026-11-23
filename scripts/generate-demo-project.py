@@ -18,7 +18,7 @@ base=podconfigs
 configrefs=list(podconfigs.values())+[add(name,'PBXFileReference',lastKnownFileType='text.xcconfig',path=name,sourceTree='<group>') for name in ['Config.example.xcconfig','Local.xcconfig']]
 configgroup=add('configgroup','PBXGroup',children=configrefs,path='Config',sourceTree='<group>')
 metadata=[add(name,'PBXFileReference',lastKnownFileType='text.plist.entitlements' if name.endswith('entitlements') else 'text.plist.xml',path=name,sourceTree='<group>') for name in ['Info.plist','Demo.entitlements']]
-for name in ['DemoApp.swift','HomeView.swift','DemoConfig.swift','EnterpriseSession.swift']:
+for name in ['DemoApp.swift','HomeView.swift','DemoConfig.swift','HostBackend.swift']:
  r=add(name,'PBXFileReference',lastKnownFileType='sourcecode.swift',path=name,sourceTree='<group>');refs.append(r);sourcefiles.append(add(name+'build','PBXBuildFile',fileRef=r))
 local_sdk=os.environ.get('CUSTOMER_VOICE_LOCAL_SDK')
 if local_sdk:

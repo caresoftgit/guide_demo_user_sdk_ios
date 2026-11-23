@@ -7,4 +7,4 @@ DEVELOPMENT_TEAM = REPLACE_APPLE_TEAM
 MARKETING_VERSION = 0.5.0
 CURRENT_PROJECT_VERSION = 1
 
-VOICE_ENTERPRISE_BACKEND_URL = https:/$()/enterprise.example.com
+VOICE_BOOTSTRAP_URL = https:/$()/app.example.com/api/voice/bootstrap

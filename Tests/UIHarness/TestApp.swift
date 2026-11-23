@@ -10,28 +10,23 @@ import SwiftUI
  @ObservedObject private var host=HarnessHost.shared
  var body: some View {
   VStack {
-   HomeView(configurationError:nil,voice:Harness.voice,enterpriseSession:host.makeSession()).padding(.top,CGFloat(generation % 2))
+   HomeView(configurationError:nil,voice:Harness.voice,requestTicket:host.requestTicket).padding(.top,CGFloat(generation % 2))
    Button("Rebuild Home") {generation += 1}.accessibilityIdentifier("rebuildHome")
-   Text("Host revocations: \(host.revocations)").accessibilityIdentifier("hostRevocations")
   }
  }
 }
 @MainActor final class HarnessHost: ObservableObject {
  static let shared=HarnessHost()
- @Published var revocations=0
- func makeSession() -> EnterpriseSession {
-  EnterpriseSession(baseURL:URL(string:"https://enterprise.ui-test.invalid")!,prepare:{
-   let p=try Harness.voice.prepareLogin()
-   return ["attempt_id":p.attemptID,"installation_id":p.installationID,"os":p.platform,"application_id":p.applicationID,"push_environment":p.pushEnvironment,"code_challenge":p.codeChallenge,"code_challenge_method":p.codeChallengeMethod]
-  },exchange:{a,t in _ = try await Harness.voice.loginWithTicket(attemptID:a,ticket:t)},nativeLogout:{try await Harness.voice.logout()},transport:{request in
-   let path=request.url!.path;let value:[String:String]
-   if path.hasSuffix("login") {value=["enterprise_access_token":"eyJhbGciOiJSUzI1NiJ9.fixture.signature"]}
-   else if path.hasSuffix("bootstrap") {let body=try JSONSerialization.jsonObject(with:request.httpBody!) as! [String:String];value=["attempt_id":body["attempt_id"]!,"login_ticket":String(repeating:"t",count:43)]}
-   else {self.revocations += 1;value=[:]}
+ func requestTicket(_ preparation: [String:String]) async throws -> String {
+  if ProcessInfo.processInfo.arguments.contains("--host-session-expired") { throw HostBackendError.hostLoginRequired }
+  return try await HostBackend(url:URL(string:"https://app.example.invalid/api/voice/bootstrap")!,transport:{ request in
+   let body=try JSONSerialization.jsonObject(with:request.httpBody!) as! [String:String]
+   let value=["attempt_id":body["attempt_id"]!,"login_ticket":String(repeating:"t",count:43),"expires_at":"2099-01-01T00:00:00Z"]
    return (try JSONSerialization.data(withJSONObject:value),HTTPURLResponse(url:request.url!,statusCode:200,httpVersion:nil,headerFields:nil)!)
-  })
+  }).requestTicket(preparation)
  }
 }
+
 @MainActor enum Harness {
     static let voice: CustomerVoice = {
         let api = VoiceAPI(config:try! VoiceConfig(backendURL:URL(string:"https://ui-test.invalid")!,accountID:"20",appID:"fixture-app"),store:HarnessStore(),transport:HarnessHTTP())

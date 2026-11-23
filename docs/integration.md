@@ -10,7 +10,7 @@ Luồng xác thực hiện tại: [phiên doanh nghiệp → ticket PKCE → SDK
 | Account ID | Caresoft cung cấp | `VoiceConfig.accountID` |
 | Caresoft App ID | Tạo ở bước 2 | `VoiceConfig.appID` |
 | Apple Bundle ID, Team ID | Apple Developer | Phải khớp app ký và cấu hình push |
-| Phiên doanh nghiệp | Backend doanh nghiệp xác thực, tự lấy user_id Caresoft; không nhập từ app |
+| Phiên doanh nghiệp | Backend doanh nghiệp xác thực, tự lấy user_id Caresoft | HTTP client ứng dụng xin ticket |
 | Credential tích hợp | Chỉ lưu backend doanh nghiệp để issue ticket; không cấp cho SDK/app |
 | Đầu số hỗ trợ | Caresoft cấp sau khi định tuyến | Ứng dụng tự giữ và truyền nguyên bản vào `call` |
 
@@ -99,9 +99,11 @@ thường giúp dừng chuông khi caller hủy hoặc thiết bị khác đã n
 
 ## 5. Đăng nhập từ luồng của ứng dụng
 
-Dùng [hợp đồng bootstrap](host-bootstrap.md) và helper `Demo/EnterpriseSession.swift`. App gọi `try CustomerVoice.shared.prepareLogin()`, gửi bảy trường preparation tới backend doanh nghiệp qua phiên host, kiểm tra attempt_id rồi gọi `try await CustomerVoice.shared.loginWithTicket(attemptID: preparation.attemptID, ticket: ticket)`.
+Ứng dụng đã đăng nhập doanh nghiệp trước khi kết nối Voice. Xem [hợp đồng bootstrap và Swift mẫu](host-bootstrap.md); helper `Demo/HostBackend.swift` chỉ xin ticket bằng HTTP client hiện có, không tạo/lưu phiên doanh nghiệp.
 
-Form username/password thuộc host demo. Credential tích hợp và user_id server-side không thành input app. SDK giữ access/refresh trong Keychain và tự restore; theo dõi sessionState/readiness. Logout gọi cả SDK và backend doanh nghiệp kể cả một bên lỗi; không fallback về legacy login.
+App gọi `prepareLogin()`, gửi đúng bảy trường công khai tới backend doanh nghiệp, kiểm tra attempt/ticket rồi gọi `loginWithTicket(attemptID:ticket:)`. Backend tự lấy user_id từ principal, chỉ backend giữ credential tích hợp. HTTP 401 đưa người dùng về cơ chế đăng nhập sẵn có của ứng dụng; không mở form riêng trong SDK.
+
+SDK giữ Voice access/refresh trong Keychain và tự restore; theo dõi sessionState/readiness trước khi bật gọi. Không dùng legacy login cho tích hợp mới.
 
 ## 6. Quyền micro và readiness
 
@@ -154,15 +156,15 @@ Hoặc dùng `CustomerVoiceUI.controller(callID:voice:onEnded:)` nếu host tự
 presentation. Không dùng đồng thời hai cơ chế present cho cùng cuộc gọi.
 SDK UI có trả lời/từ chối, kết thúc, micro, chọn âm thanh thực tế và DTMF.
 UI không tự đăng nhập, tạo cuộc gọi hoặc tự trả lời khi bind/present.
-Màn hình khóa dùng **CallKit native của iOS**, giao diện trong app theo mẫu Android.
+Màn hình khóa dùng **CallKit native của iOS**, giao diện trong app do CustomerVoiceUI cung cấp.
 
 UI tự hiển thị **Đang kết nối lại…** khi chuyển mạng hoặc media bị gián đoạn.
 Host tự xây UI cần quan sát `voice.$connectionStates` theo `callID`. SDK giữ nguyên
 cuộc gọi khi khôi phục; host không gọi lại `call()` khi nhận trạng thái này.
 Không khôi phục trong 30 giây liên tục thì cuộc gọi đóng và host nhận event lỗi
-`NETWORK_RECOVERY_TIMEOUT`. Xem [API](https://github.com/caresoftgit/user_voice_sdk_ios/blob/0.5.0/docs/api.md) để xử lý state và lỗi.
+`NETWORK_RECOVERY_TIMEOUT`. Xem [API](https://github.com/caresoftgit/user_voice_sdk_ios) để xử lý state và lỗi.
 
-## 9. Đăng xuất và đăng nhập lại
+## 9. Ngắt Voice và đăng xuất ứng dụng
 
 ```swift
 try await CustomerVoice.shared.logout()
@@ -171,7 +173,7 @@ try await CustomerVoice.shared.logout()
 Logout dừng media, đóng màn hình và xóa phiên local trước khi revoke server.
 Nếu lỗi `LOGOUT_REVOKE_UNCONFIRMED`, local vẫn logout nhưng chưa xác nhận được
 revoke phía server. Ứng dụng xử lý thông báo phù hợp, không phục hồi phiên cũ.
-Quan sát `sessionState` và event `login_required` để mở luồng đăng nhập của host.
+Ngắt Voice không đăng xuất tài khoản ứng dụng; có thể xin ticket mới bằng phiên host hiện có. Khi đăng xuất toàn bộ ứng dụng, luôn chạy cả SDK logout và logout doanh nghiệp, xử lý lỗi từng bước; backend vô hiệu hóa host session và ghi outbox HOST-revoke bền vững. Xem [payload và trách nhiệm logout](host-bootstrap.md#ngắt-voice-và-đăng-xuất-ứng-dụng). Tuần tự hóa việc đổi tài khoản với bootstrap và logout.
 
 ## 10. Objective-C
 
@@ -182,8 +184,10 @@ Gọi trên main thread. Ví dụ:
 
 ```objc
 #import <CustomerVoice/CustomerVoice-Swift.h>
-[[CVCustomerVoice shared] loginWithUserID:userID tenantAPIToken:accountToken
- completion:^(NSDictionary *session, NSError *error) {
-     // Cập nhật UI host; không ghi token hoặc response xác thực vào log.
- }];
+[[CVCustomerVoice shared] prepareLoginWithCompletion:^(NSDictionary *preparation, NSError *error) {
+    // Host gửi bảy trường preparation tới backend bằng phiên ứng dụng hiện có.
+    // Khi nhận ticket hợp lệ, trên main thread gọi:
+    // [[CVCustomerVoice shared] loginWithTicketWithAttemptID:preparation[@"attemptId"]
+    //     ticket:ticket completion:^(NSDictionary *session, NSError *error) { ... }];
+}];
 ```
